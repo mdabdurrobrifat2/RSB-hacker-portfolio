@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hacker-style portfolio of a creative developer.">
+  <title>ABDUR ROB RIFAT.exe | Creative Developer</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg: #030706;
+      --panel: rgba(4, 17, 12, 0.84);
+      --green: #39ff88;
+      --green-soft: #8affb9;
+      --green-dim: #14733d;
+      --ink: #d8ffe5;
+      --muted: #6ca381;
+      --line: rgba(57, 255, 136, 0.2);
+      --mono: 'JetBrains Mono', 'Courier New', monospace;
+      --sans: 'Space Grotesk', 'Segoe UI', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: var(--sans);
+      overflow-x: hidden;
+    }
+
+    #matrix {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      opacity: .23;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 80% 10%, rgba(32, 183, 89, .12), transparent 28%),
+        linear-gradient(180deg, rgba(2, 10, 6, .38), rgba(3, 7, 6, .96) 88%);
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      pointer-events: none;
+      opacity: .035;
+      background: repeating-linear-gradient(0deg, transparent 0 3px, #b5ffd0 4px);
+      mix-blend-mode: screen;
+    }
+
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: auto; }
+    .mono { font-family: var(--mono); }
+    .green { color: var(--green); }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 26px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .logo {
+      font: 700 18px var(--mono);
+      letter-spacing: .06em;
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--muted); }
+    nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; }
+    nav a { color: var(--muted); font: 500 12px var(--mono); text-decoration: none; transition: color .2s; }
+    nav a:hover { color: var(--green); }
+    .admin-trigger { border: 1px solid var(--green-dim); padding: 9px 12px; color: var(--green) !important; cursor: pointer; background: rgba(57,255,136,.05); font: 500 11px var(--mono); }
+    .admin-trigger:hover { background: var(--green); color: var(--bg) !important; }
+    .nav-status { color: var(--green-soft); font-size: 11px; }
+    .nav-status::before { content: ''; display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px var(--green); }
+
+    .hero { min-height: 660px; display: grid; grid-template-columns: 1.35fr .65fr; align-items: center; gap: 70px; padding: 82px 0 100px; }
+    .eyebrow { color: var(--green); font: 500 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    h1 { max-width: 730px; margin: 18px 0 20px; font-size: clamp(52px, 8vw, 102px); line-height: .9; letter-spacing: -.07em; font-weight: 700; }
+    h1 em { color: var(--green); font-style: normal; text-shadow: 0 0 24px rgba(57,255,136,.35); }
+    .hero-copy { max-width: 620px; margin: 0 0 32px; color: #8db89c; font-size: 18px; line-height: 1.65; }
+    .terminal-line { display: flex; align-items: center; gap: 11px; color: var(--green-soft); font: 13px var(--mono); }
+    .terminal-line::before { content: '>'; color: var(--green); }
+    .cursor { display: inline-block; width: 8px; height: 18px; margin-left: 1px; background: var(--green); animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero-card { padding: 20px; border: 1px solid var(--line); background: linear-gradient(145deg, rgba(9, 37, 23, .9), rgba(3, 10, 7, .8)); box-shadow: 0 0 50px rgba(29, 208, 99, .06); transform: rotate(2deg); }
+    .hero-card:hover { transform: rotate(0); }
+    .card-head { display: flex; align-items: center; gap: 7px; padding-bottom: 17px; border-bottom: 1px solid var(--line); color: var(--muted); font: 11px var(--mono); }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
+    .code { padding: 22px 3px 3px; font: 12px/2 var(--mono); color: #93cfa8; }
+    .code .key { color: #46ccff; }
+    .code .value { color: var(--green); }
+    .code .comment { color: #48775a; }
+    .code-indent { padding-left: 20px; }
+
+    section { padding: 92px 0; border-top: 1px solid var(--line); }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 35px; }
+    .section-title { margin: 8px 0 0; font-size: clamp(30px, 4vw, 48px); letter-spacing: -.05em; }
+    .section-number { color: var(--green-dim); font: 12px var(--mono); }
+
+    .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .project { position: relative; min-height: 300px; display: flex; flex-direction: column; padding: 24px; border: 1px solid var(--line); background: rgba(5, 19, 12, .72); transition: transform .25s, border-color .25s, background .25s; }
+    .project:hover { transform: translateY(-6px); border-color: var(--green); background: rgba(7, 32, 19, .92); }
+    .project-id { color: var(--green); font: 11px var(--mono); }
+    .project h3 { margin: 42px 0 12px; font: 600 23px var(--sans); color: var(--ink); }
+    .project p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: auto; padding-top: 24px; }
+    .tag { padding: 5px 8px; border: 1px solid rgba(57,255,136,.22); color: var(--green-soft); font: 10px var(--mono); }
+    .arrow { position: absolute; top: 20px; right: 22px; color: var(--green); font-size: 21px; }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+    .about-copy { color: #91b99d; line-height: 1.8; font-size: 16px; }
+    .about-copy strong { color: var(--ink); font-weight: 500; }
+    .skill-list { display: grid; gap: 18px; }
+    .skill-row { display: grid; grid-template-columns: 100px 1fr 38px; align-items: center; gap: 15px; color: var(--green-soft); font: 12px var(--mono); }
+    .meter { height: 5px; background: #0d2b1a; }
+    .meter i { display: block; height: 100%; background: var(--green); box-shadow: 0 0 10px rgba(57,255,136,.5); }
+
+    .contact { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 40px; }
+    .contact h2 { max-width: 650px; margin: 12px 0 0; font-size: clamp(36px, 6vw, 72px); line-height: .95; letter-spacing: -.06em; }
+    .contact h2 span { color: var(--green); }
+    .contact-link { display: inline-flex; align-items: center; gap: 13px; padding: 17px 20px; border: 1px solid var(--green); color: var(--green); font: 12px var(--mono); text-decoration: none; transition: background .2s, color .2s; }
+    .contact-link:hover { color: var(--bg); background: var(--green); }
+
+    footer { display: flex; justify-content: space-between; padding: 28px 0 36px; color: #4c7859; font: 11px var(--mono); }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--green); }
+
+    .boot-screen { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; background: #010302; animation: boot-out .8s 2.7s forwards; pointer-events: none; }
+    .boot-mark { position: relative; color: var(--green); text-align: center; font: 700 clamp(48px, 12vw, 110px)/.9 var(--mono); letter-spacing: -.12em; text-shadow: 0 0 18px rgba(57,255,136,.7); animation: mark-in .8s ease-out both; }
+    .boot-mark::before, .boot-mark::after { content: ''; position: absolute; left: 50%; width: 130%; height: 1px; background: var(--green); box-shadow: 0 0 12px var(--green); transform: translateX(-50%); }
+    .boot-mark::before { top: -18px; animation: scan 1.2s ease-in-out infinite; }
+    .boot-mark::after { bottom: -18px; opacity: .45; }
+    .boot-label { display: block; margin-top: 28px; color: var(--green-soft); font: 11px var(--mono); letter-spacing: .3em; }
+    @keyframes mark-in { from { opacity: 0; transform: scale(.7); filter: blur(8px); } to { opacity: 1; transform: scale(1); filter: blur(0); } }
+    @keyframes scan { 50% { width: 70%; opacity: .25; } }
+    @keyframes boot-out { to { opacity: 0; visibility: hidden; } }
+
+    .admin-modal { position: fixed; inset: 0; z-index: 20; display: none; place-items: center; padding: 20px; background: rgba(0, 5, 3, .82); backdrop-filter: blur(8px); }
+    .admin-modal.is-open { display: grid; }
+    .admin-panel { width: min(720px, 100%); border: 1px solid var(--green); background: #031109; box-shadow: 0 0 55px rgba(57,255,136,.18); }
+    .admin-head { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--line); color: var(--green); font: 12px var(--mono); }
+    .close-admin { border: 0; color: var(--muted); background: none; cursor: pointer; font: 20px var(--mono); }
+    .close-admin:hover { color: var(--green); }
+    .admin-body { display: grid; grid-template-columns: 1fr 1.25fr; gap: 28px; padding: 26px; }
+    .admin-login h3 { margin: 0 0 8px; font: 600 23px var(--sans); }
+    .admin-login p { margin: 0 0 20px; color: var(--muted); font: 12px/1.6 var(--mono); }
+    .admin-login label { display: block; margin: 12px 0 6px; color: var(--green-soft); font: 10px var(--mono); }
+    .admin-login input { width: 100%; border: 1px solid var(--line); padding: 11px; outline: none; color: var(--ink); background: #020804; font: 12px var(--mono); }
+    .admin-login input:focus { border-color: var(--green); }
+    .login-button { width: 100%; margin-top: 18px; padding: 12px; border: 1px solid var(--green); color: var(--bg); background: var(--green); cursor: pointer; font: 700 11px var(--mono); }
+    .login-button:hover { box-shadow: 0 0 18px rgba(57,255,136,.4); }
+    .admin-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; align-content: start; }
+    .admin-stats[hidden] { display: none; }
+    .stat { padding: 16px; border: 1px solid var(--line); background: rgba(57,255,136,.04); }
+    .stat small { display: block; color: var(--muted); font: 10px var(--mono); }
+    .stat strong { display: block; margin-top: 8px; color: var(--green); font: 600 25px var(--mono); }
+    .admin-log { grid-column: 1 / -1; margin: 2px 0 0; color: var(--muted); font: 10px/1.8 var(--mono); }
+    .admin-log b { color: var(--green); font-weight: 400; }
+    .login-message { min-height: 16px; margin: 10px 0 0; color: var(--green); font: 10px var(--mono); }
+    .user-trigger { border: 0; padding: 9px 0; color: var(--muted); background: none; cursor: pointer; font: 500 11px var(--mono); }
+    .user-trigger:hover { color: var(--green); }
+    .user-modal .admin-panel { width: min(500px, 100%); }
+    .auth-tabs { display: flex; border-bottom: 1px solid var(--line); }
+    .auth-tab { flex: 1; padding: 13px; border: 0; color: var(--muted); background: transparent; cursor: pointer; font: 11px var(--mono); }
+    .auth-tab.is-active { color: var(--green); background: rgba(57,255,136,.06); }
+
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 28px, 560px); }
+      nav { padding: 20px 0; }
+      nav ul { display: none; }
+      .nav-status { font-size: 9px; }
+      .admin-trigger { padding: 8px; font-size: 9px; }
+      .hero { min-height: auto; grid-template-columns: 1fr; gap: 45px; padding: 75px 0 90px; }
+      h1 { font-size: clamp(52px, 17vw, 86px); }
+      .hero-copy { font-size: 16px; }
+      .hero-card { max-width: 420px; transform: rotate(0); }
+      section { padding: 70px 0; }
+      .section-head { display: block; }
+      .section-number { display: block; margin-bottom: 10px; }
+      .projects, .about-grid, .contact { grid-template-columns: 1fr; gap: 18px; }
+      .project { min-height: 260px; }
+      .about-grid { gap: 42px; }
+      .contact-link { width: fit-content; }
+      footer { display: block; line-height: 2; }
+      footer span { display: block; }
+      .admin-body { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix" aria-hidden="true"></canvas>
+  <div class="boot-screen" aria-label="RSB loading animation"><div class="boot-mark">RSB<span class="boot-label">ROOT SYSTEM BOOTING</span></div></div>
+
+  <div class="admin-modal user-modal" id="userModal" aria-hidden="true">
+    <div class="admin-panel" role="dialog" aria-modal="true" aria-labelledby="userTitle">
+      <div class="admin-head"><span>RSB_USER // ACCESS PORTAL</span><button class="close-admin" id="closeUser" aria-label="Close user panel">x</button></div>
+      <div class="auth-tabs"><button class="auth-tab is-active" id="loginTab" type="button">LOGIN</button><button class="auth-tab" id="registerTab" type="button">REGISTER</button></div>
+      <form class="admin-login" id="userAuthForm" style="padding: 26px;">
+        <h3 id="userTitle">Welcome back</h3>
+        <p id="userHint">Sign in to save your projects and contact RSB.</p>
+        <label for="userEmail">EMAIL</label><input id="userEmail" type="email" autocomplete="email" placeholder="you@example.com" required>
+        <label for="userPassword">PASSWORD</label><input id="userPassword" type="password" autocomplete="current-password" placeholder="••••••••" required>
+        <button class="login-button" id="userSubmit" type="submit">LOGIN TO RSB</button>
+        <div class="login-message" id="userMessage"></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-modal" id="adminModal" aria-hidden="true">
+    <div class="admin-panel" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+      <div class="admin-head"><span>RSB_ADMIN // CONTROL ROOM</span><button class="close-admin" id="closeAdmin" aria-label="Close admin panel">x</button></div>
+      <div class="admin-body" id="adminGate">
+        <form class="admin-login" id="adminLogin">
+          <h3 id="adminTitle">Authenticate</h3>
+          <p>Private system access. Enter credentials to unlock the dashboard.</p>
+          <label for="adminUser">OPERATOR ID</label><input id="adminUser" autocomplete="username" placeholder="admin" required>
+          <label for="adminPass">ACCESS KEY</label><input id="adminPass" type="password" autocomplete="current-password" placeholder="••••••••" required>
+          <button class="login-button" type="submit">INITIALIZE SESSION</button>
+          <div class="login-message" id="loginMessage"></div>
+        </form>
+        <div class="admin-stats" id="adminDashboard" aria-label="Dashboard statistics" hidden>
+          <div class="stat"><small>ACTIVE NODES</small><strong>08</strong></div>
+          <div class="stat"><small>UPTIME</small><strong>99.9%</strong></div>
+          <div class="stat"><small>VISITORS</small><strong>1.2K</strong></div>
+          <div class="stat"><small>THREAT LEVEL</small><strong>LOW</strong></div>
+          <p class="admin-log"><b>[OK]</b> matrix stream connected<br><b>[OK]</b> portfolio endpoint online<br><b>[WAIT]</b> awaiting operator input</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <header class="wrap">
+    <nav>
+      <a class="logo" href="#top">ARR<span>.exe</span></a>
+      <ul>
+        <li><a href="#work">01 / WORK</a></li>
+        <li><a href="#about">02 / ABOUT</a></li>
+        <li><a href="#contact">03 / CONTACT</a></li>
+      </ul>
+      <div class="nav-status mono">SYSTEM ONLINE</div>
+      <button class="user-trigger" id="openUser" type="button">LOGIN / REGISTER</button>
+    </nav>
+  </header>
+
+  <main id="top" class="wrap">
+    <section class="hero" style="border-top: 0;">
+      <div>
+        <div class="eyebrow">Creative developer // Dhaka, Bangladesh</div>
+        <h1>Abdur Rob<br><em>Rifat</em><br>portfolio.</h1>
+        <p class="hero-copy">Full-stack developer with a soft spot for sharp interfaces, strange ideas, and code that feels good to use.</p>
+        <div class="terminal-line">available for interesting projects<span class="cursor"></span></div>
+      </div>
+      <div class="hero-card" aria-label="Developer profile data">
+          <div class="card-head"><i class="dot"></i> abdur_rob_rifat.json</div>
+        <div class="code">
+          <div>{</div>
+          <div class="code-indent"><span class="key">"name"</span>: <span class="value">"Abdur Rob Rifat"</span>,</div>
+          <div class="code-indent"><span class="key">"role"</span>: <span class="value">"Full-stack dev"</span>,</div>
+          <div class="code-indent"><span class="key">"coffee"</span>: <span class="value">true</span>,</div>
+          <div class="code-indent"><span class="key">"focus"</span>: [</div>
+          <div class="code-indent code-indent"><span class="value">"web experiences"</span>,</div>
+          <div class="code-indent code-indent"><span class="value">"clean systems"</span></div>
+          <div class="code-indent">]</div>
+          <div>}</div>
+          <div class="comment">// compiling ideas into reality</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="section-head">
+        <div><div class="eyebrow">Selected transmissions</div><h2 class="section-title">Things I've shipped.</h2></div>
+        <div class="section-number">[ 01 / 03 ]</div>
+      </div>
+      <div class="projects">
+        <article class="project"><div class="project-id">PROJECT_001</div><div class="arrow">&#8599;</div><h3>Neon Commerce</h3><p>A fast, dark-mode storefront for an independent fashion label breaking the usual rules.</p><div class="tags"><span class="tag">NEXT.JS</span><span class="tag">STRIPE</span><span class="tag">FRAMER</span></div></article>
+        <article class="project"><div class="project-id">PROJECT_002</div><div class="arrow">&#8599;</div><h3>Signal / Noise</h3><p>Real-time data visualization tool that turns messy information into clear decisions.</p><div class="tags"><span class="tag">REACT</span><span class="tag">D3.JS</span><span class="tag">NODE</span></div></article>
+        <article class="project"><div class="project-id">PROJECT_003</div><div class="arrow">&#8599;</div><h3>Afterimage</h3><p>An interactive digital art experiment built from light, sound, and a little bit of chaos.</p><div class="tags"><span class="tag">WEBGL</span><span class="tag">THREE.JS</span><span class="tag">AUDIO</span></div></article>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="section-head">
+        <div><div class="eyebrow">System information</div><h2 class="section-title">A little about me.</h2></div>
+        <div class="section-number">[ 02 / 03 ]</div>
+      </div>
+      <div class="about-grid">
+        <div class="about-copy"><p>I'm Abdur Rob Rifat, a developer who likes working where <strong>technology meets taste.</strong> I care about the details people feel but rarely name: a transition at the right moment, a layout that breathes, a product that gets out of the way.</p><p>When I'm away from the keyboard, you'll find me collecting music, taking long walks, or dismantling perfectly good things to see how they work.</p></div>
+        <div class="skill-list">
+          <div class="skill-row"><span>FRONTEND</span><div class="meter"><i style="width: 94%"></i></div><span>94%</span></div>
+          <div class="skill-row"><span>BACKEND</span><div class="meter"><i style="width: 82%"></i></div><span>82%</span></div>
+          <div class="skill-row"><span>DESIGN</span><div class="meter"><i style="width: 88%"></i></div><span>88%</span></div>
+          <div class="skill-row"><span>COFFEE</span><div class="meter"><i style="width: 99%"></i></div><span>99%</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div><div class="eyebrow">Open channel</div><h2>Have a weird idea?<br><span>Let's talk.</span></h2></div>
+      <a class="contact-link" href="mailto:hello@rifat.dev">SEND A TRANSMISSION &#8594;</a>
+    </section>
+  </main>
+
+  <footer class="wrap"><span>ABDUR ROB RIFAT.exe // BUILT WITH HTML, CSS &amp; JS</span><span><button class="admin-trigger" id="openAdmin" type="button">ADMIN LOGIN</button> <a href="#top">BACK TO TOP &#8593;</a></span></footer>
+
+  <script>
+    const userModal = document.getElementById('userModal');
+    const openUser = document.getElementById('openUser');
+    const closeUser = document.getElementById('closeUser');
+    const userAuthForm = document.getElementById('userAuthForm');
+    const userMessage = document.getElementById('userMessage');
+    const loginTab = document.getElementById('loginTab');
+    const registerTab = document.getElementById('registerTab');
+    const userTitle = document.getElementById('userTitle');
+    const userHint = document.getElementById('userHint');
+    const userSubmit = document.getElementById('userSubmit');
+    let isRegistering = false;
+
+    function toggleUser(isOpen) {
+      userModal.classList.toggle('is-open', isOpen);
+      userModal.setAttribute('aria-hidden', String(!isOpen));
+      if (isOpen) document.getElementById('userEmail').focus();
+    }
+
+    function setAuthMode(register) {
+      isRegistering = register;
+      loginTab.classList.toggle('is-active', !register);
+      registerTab.classList.toggle('is-active', register);
+      userTitle.textContent = register ? 'Create your account' : 'Welcome back';
+      userHint.textContent = register ? 'Register to save your projects and contact RSB.' : 'Sign in to save your projects and contact RSB.';
+      userSubmit.textContent = register ? 'CREATE ACCOUNT' : 'LOGIN TO RSB';
+      userMessage.textContent = '';
+    }
+
+    openUser.addEventListener('click', () => toggleUser(true));
+    closeUser.addEventListener('click', () => toggleUser(false));
+    loginTab.addEventListener('click', () => setAuthMode(false));
+    registerTab.addEventListener('click', () => setAuthMode(true));
+    userModal.addEventListener('click', (event) => {
+      if (event.target === userModal) toggleUser(false);
+    });
+    userAuthForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      userMessage.textContent = isRegistering ? 'ACCOUNT CREATED // welcome to RSB' : 'LOGIN ACCEPTED // welcome back';
+    });
+
+    const adminModal = document.getElementById('adminModal');
+    const openAdmin = document.getElementById('openAdmin');
+    const closeAdmin = document.getElementById('closeAdmin');
+    const adminLogin = document.getElementById('adminLogin');
+    const loginMessage = document.getElementById('loginMessage');
+    const adminDashboard = document.getElementById('adminDashboard');
+
+    function toggleAdmin(isOpen) {
+      adminModal.classList.toggle('is-open', isOpen);
+      adminModal.setAttribute('aria-hidden', String(!isOpen));
+      if (isOpen) document.getElementById('adminUser').focus();
+    }
+
+    openAdmin.addEventListener('click', () => toggleAdmin(true));
+    closeAdmin.addEventListener('click', () => toggleAdmin(false));
+    adminModal.addEventListener('click', (event) => {
+      if (event.target === adminModal) toggleAdmin(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') toggleAdmin(false);
+    });
+    adminLogin.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const username = document.getElementById('adminUser').value.trim();
+      const password = document.getElementById('adminPass').value;
+      if (username === 'admin' && password === 'RSB@2026') {
+        adminDashboard.hidden = false;
+        loginMessage.textContent = 'SESSION ACCEPTED // dashboard unlocked';
+        return;
+      }
+      adminDashboard.hidden = true;
+      loginMessage.textContent = 'ACCESS DENIED // invalid operator credentials';
+    });
+
+    function checkAdminRoute() {
+      if (window.location.hash === '#rsb-admin') toggleAdmin(true);
+    }
+
+    window.addEventListener('hashchange', checkAdminRoute);
+    checkAdminRoute();
+
+    const canvas = document.getElementById('matrix');
+    const context = canvas.getContext('2d');
+    const glyphs = '01アイウエオカキクケコ<>[]{}$#@%';
+    let columns = [];
+    let fontSize = 14;
+
+    function resizeMatrix() {
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = window.innerWidth * ratio;
+      canvas.height = window.innerHeight * ratio;
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+      fontSize = window.innerWidth < 600 ? 12 : 14;
+      columns = Array.from({ length: Math.ceil(window.innerWidth / fontSize) }, () => Math.random() * -80);
+    }
+
+    function drawMatrix() {
+      context.fillStyle = 'rgba(3, 7, 6, 0.075)';
+      context.fillRect(0, 0, window.innerWidth, window.innerHeight);
+      context.font = fontSize + 'px monospace';
+      columns.forEach((y, index) => {
+        const glyph = glyphs[Math.floor(Math.random() * glyphs.length)];
+        const x = index * fontSize;
+        context.fillStyle = Math.random() > .96 ? '#caffdc' : '#1dba63';
+        context.fillText(glyph, x, y * fontSize);
+        if (y * fontSize > window.innerHeight && Math.random() > .975) columns[index] = 0;
+        columns[index] += .65;
+      });
+      requestAnimationFrame(drawMatrix);
+    }
+
+    window.addEventListener('resize', resizeMatrix);
+    resizeMatrix();
+    drawMatrix();
+  </script>
+</body>
+</html>
